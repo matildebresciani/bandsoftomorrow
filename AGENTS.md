@@ -35,6 +35,7 @@ All editorial articles are represented by one Payload `posts` collection. Do not
 - Generate editable People slugs from `name`, with draft/public publishing, publication dates, and version history. Reserve `/people/[slug]` in English and `/personer/[slug]` in Danish for future profiles and contribution archives.
 - Distinguish route-capable collections from collections with implemented frontend pages. Keep People out of page-link selectors, previews, and sitemaps until its frontend page exists. Post relationships to People are a separate checkpoint.
 - Add `concerts` and `galleries` as separate upcoming collection checkpoints. Keep existing collections and assignments intact while adding the new collections; taxonomy replacement and migration follow separately.
+- Concerts is a non-routed collection using `createCollection`, with featured image, artist, support act, venue, city, date, and ticket link. All seven fields are optional. Keep it out of routed-collection registration; no individual concert pages are planned for this checkpoint.
 - Keep post routes generic (`posts`/localized equivalent and a post slug). Do not encode category or article type into the canonical post route.
 - Use one generic post archive with search, pagination, and grouped tag filters represented in the URL. Defer dedicated tag pages.
 - All CMS users are trusted publishers. Support draft/public publishing and working preview; defer approval roles and workflows. Keep unpublished content inaccessible to anonymous visitors.

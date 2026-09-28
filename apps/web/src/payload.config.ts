@@ -10,6 +10,7 @@ import { defaultLexical } from '@/components/molecules/admin/fields/defaultLexic
 import { Icons } from './collections/assets/icons/config';
 import { Media } from './collections/assets/media/config';
 import { PostCategories } from './collections/categories/post-categories/config';
+import { Concerts } from './collections/content/concerts/config';
 import { Pages } from './collections/content/pages/config';
 import { Posts } from './collections/content/posts/config';
 import { Faqs } from './collections/entries/faqs/config';
@@ -70,6 +71,7 @@ export default buildConfig({
     collections: [
         Pages,
         Posts,
+        Concerts,
         PostCategories,
         TagGroups,
         Tags,
