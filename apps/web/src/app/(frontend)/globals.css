@@ -21,18 +21,79 @@
     --xxl-max: 1919px;
     --xxxl: 1920px;
 
-    /* Colors */
-    --beige: #f2f4f0;
-
     /* Fonts */
-    --font-roboto: "Roboto", sans-serif;
-    --font-primary: var(--font-sofia);
+    --font-primary: var(--font-dela-gothic-one);
+    --font-secondary: var(--font-inclusive-sans);
 
-    /* Sizes */
-    --header-height: 104px;
-    --header-height-offset: calc(var(--header-height) + 1px);
-    --header-height-desktop: 128px;
-    --header-height-desktop-offset: calc(var(--header-height-desktop) + 1px);
+    /* Header */
+    --header-height: 101px;
+    --header-height-offset: 72px;
+    --header-height-desktop: 160px;
+    --header-height-desktop-offset: 120px;
+    --header-rows-desktop-large: 110px 50px;
+    --header-rows-desktop-small: 80px 50px;
+
+    /* Colors */
+    --bg-base: #fbf8f1;
+    --bg-highlight: #3d59b0;
+    --bg-subtle: #d8d5cd;
+    --bg-section-2: #bdc9e7;
+
+    --fg-base: #33261c;
+    --fg-on-color: #fbf8f1;
+    --fg-subtle: #e5edff;
+    --fg-faded: #403b3b;
+    --fg-highlight: #3d59b0;
+    --fg-highlight-2: #ae1111;
+
+    --button-primary: #ae1111;
+    --button-primary-on-color: #fbf8f1;
+    --button-secondary: #3d59b0;
+    --button-primary-hover: #660d0d;
+    --button-primary-on-color-hover: #bdc9e7;
+    --button-secondary-hover: #344571;
+    --button-subtle: #d8d5cd;
+
+    --button-text: #fbf8f1;
+    --button-text-on-subtle: #33261c;
+
+    --bg-label-red: #ae1111;
+    --bg-label-blue: #3d59b0;
+    --bg-label-lightblue: #bdc9e7;
+    --bg-label-dark: #33261c;
+
+    --border-base: #33261c;
+
+    --input-bg: #fbfaf7;
+    --input-subtle: #eaeaea;
+    --input-border: var(--border-base);
+
+    --overlay-red: #df4739;
+    --overlay-blue: #3d59b0;
+
+    --logo-blue: rgb(61 89 176 / 77%);
+    --logo-brown: rgb(60 30 5 / 73%);
+    --logo-red: #df4739;
+
+    /* Padding */
+    --p-general: 0;
+    --p-xs: 8px;
+    --p-s: 12px;
+    --p-base: 16px;
+    --p-m: 20px;
+    --p-l: 32px;
+    --p-xl: 100px;
+    --p-xxl: 265px;
+
+    /* Section spacing */
+    --space-general: 0;
+    --space-xxs: 48px;
+    --space-xs: 64px;
+    --space-sm: 80px;
+    --space-m: 96px;
+    --space-l: 128px;
+    --space-xl: 160px;
+    --space-xxl: 320px;
 }
 
 * {
@@ -48,7 +109,9 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100svh;
-    font-family: var(--font-primary);
+    background-color: var(--bg-base);
+    color: var(--fg-base);
+    font-family: var(--font-secondary);
 }
 
 body:has(.modal--open) {

@@ -1,5 +1,68 @@
 @import "tailwindcss";
 
-@theme {
+@theme inline {
     --font-primary: var(--font-primary);
+    --font-secondary: var(--font-secondary);
+
+    --color-bg-base: var(--bg-base);
+    --color-bg-highlight: var(--bg-highlight);
+    --color-bg-subtle: var(--bg-subtle);
+    --color-bg-section-2: var(--bg-section-2);
+    --color-bg-label-red: var(--bg-label-red);
+    --color-bg-label-blue: var(--bg-label-blue);
+    --color-bg-label-lightblue: var(--bg-label-lightblue);
+    --color-bg-label-dark: var(--bg-label-dark);
+
+    --color-fg-base: var(--fg-base);
+    --color-fg-on-color: var(--fg-on-color);
+    --color-fg-subtle: var(--fg-subtle);
+    --color-fg-faded: var(--fg-faded);
+    --color-fg-highlight: var(--fg-highlight);
+    --color-fg-highlight-2: var(--fg-highlight-2);
+
+    --color-button-primary: var(--button-primary);
+    --color-button-primary-on-color: var(--button-primary-on-color);
+    --color-button-secondary: var(--button-secondary);
+    --color-button-primary-hover: var(--button-primary-hover);
+    --color-button-primary-on-color-hover: var(--button-primary-on-color-hover);
+    --color-button-secondary-hover: var(--button-secondary-hover);
+    --color-button-subtle: var(--button-subtle);
+
+    --color-button-text: var(--button-text);
+    --color-button-text-on-subtle: var(--button-text-on-subtle);
+
+    --color-label-red: var(--bg-label-red);
+    --color-label-blue: var(--bg-label-blue);
+    --color-label-lightblue: var(--bg-label-lightblue);
+    --color-label-dark: var(--bg-label-dark);
+
+    --color-border-base: var(--border-base);
+
+    --color-input-bg: var(--input-bg);
+    --color-input-subtle: var(--input-subtle);
+    --color-input-border: var(--input-border);
+
+    --color-overlay-red: var(--overlay-red);
+    --color-overlay-blue: var(--overlay-blue);
+
+    --color-logo-blue: var(--logo-blue);
+    --color-logo-brown: var(--logo-brown);
+    --color-logo-red: var(--logo-red);
+
+    --spacing-xs: var(--p-xs);
+    --spacing-s: var(--p-s);
+    --spacing-base: var(--p-base);
+    --spacing-m: var(--p-m);
+    --spacing-l: var(--p-l);
+    --spacing-xl: var(--p-xl);
+    --spacing-xxl: var(--p-xxl);
+
+    --spacing-section-general: var(--space-general);
+    --spacing-section-xxs: var(--space-xxs);
+    --spacing-section-xs: var(--space-xs);
+    --spacing-section-sm: var(--space-sm);
+    --spacing-section-m: var(--space-m);
+    --spacing-section-l: var(--space-l);
+    --spacing-section-xl: var(--space-xl);
+    --spacing-section-xxl: var(--space-xxl);
 }

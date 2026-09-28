@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Roboto } from 'next/font/google';
+import { Dela_Gothic_One, Inclusive_Sans } from 'next/font/google';
 import { setRequestLocale } from 'next-intl/server';
 import EndBodyScripts from '@/components/organisms/global/body/EndBodyScripts';
 import StartBodyScripts from '@/components/organisms/global/body/StartBodyScripts';
@@ -16,9 +16,16 @@ import '../globals.css';
 
 type Props = LayoutProps<'/[locale]'>;
 
-const roboto = Roboto({
-    weight: ['400', '700'],
-    variable: '--font-roboto',
+const delaGothicOne = Dela_Gothic_One({
+    weight: ['400'],
+    variable: '--font-dela-gothic-one',
+    style: ['normal'],
+    subsets: ['latin'],
+});
+
+const inclusiveSans = Inclusive_Sans({
+    weight: ['300', '400', '700'],
+    variable: '--font-inclusive-sans',
     style: ['normal'],
     subsets: ['latin'],
 });
@@ -32,7 +39,12 @@ export default async function RootLayout({ children, params }: Props) {
     const options = await getCachedOptions(locale, 1);
 
     return (
-        <html data-scroll-behavior="smooth" className={cn(roboto.variable)} lang={locale} suppressHydrationWarning>
+        <html
+            data-scroll-behavior="smooth"
+            className={cn(delaGothicOne.variable, inclusiveSans.variable)}
+            lang={locale}
+            suppressHydrationWarning
+        >
             <head>
                 <HeadScripts scripts={options.scriptInjection} />
                 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />

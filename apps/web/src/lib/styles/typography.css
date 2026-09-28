@@ -1,3 +1,5 @@
+/* Fluid typography uses a 375px–1920px viewport range. */
+
 @layer base {
     h1,
     .heading-1,
@@ -8,39 +10,198 @@
     h4,
     .heading-4,
     h5,
-    .heading-5 {
+    .heading-5,
+    footer {
         display: block;
+        font-family: var(--font-primary);
         hyphens: auto;
     }
 
-    .wysiwyg {
-        & > * {
-            margin-bottom: 1rem;
-        }
+    h1,
+    .heading-1 {
+        /* Font size range: 36–64px, line height range: 1.0–1.0. */
+        font-size: clamp(2.25rem, 1.812vw + 1.825rem, 4rem);
+        line-height: clamp(2.25rem, 1.812vw + 1.825rem, 4rem);
+    }
 
-        ul,
-        ol {
-            padding: 0.5rem 2rem 0rem;
-        }
+    h2,
+    .heading-2 {
+        /* Font size range: 20–42px, line height range: 1.25–1.25. */
+        font-size: clamp(1.625rem, 1.036vw + 1.382rem, 2.625rem);
+        line-height: clamp(2.031rem, 1.294vw + 1.728rem, 3.281rem);
+    }
 
-        ul {
-            list-style-type: disc;
-        }
+    h3,
+    .heading-3 {
+        /* Font size range: 20–36px, line height range: 1.25–1.00. */
+        font-size: clamp(1.25rem, 1.036vw + 1.007rem, 2.25rem);
+        line-height: clamp(1.563rem, 0.712vw + 1.396rem, 2.25rem);
+    }
 
-        ol {
-            list-style-type: decimal;
-        }
+    h4,
+    .heading-4 {
+        /* Font size range: 16–20px, line height range: 1.1–1.25. */
+        font-size: clamp(1rem, 0.259vw + 0.939rem, 1.25rem);
+        line-height: clamp(1.1rem, 0.479vw + 0.988rem, 1.563rem);
+    }
 
-        li {
-            padding-bottom: 0.5rem;
-        }
+    h5,
+    .heading-5 {
+        font-size: 1rem;
+        line-height: 1.25;
+    }
 
-        picture {
-            display: block;
+    body {
+        /* Font size range: 16–24px, line height range: 1.3–1.3. */
+        font-family: var(--font-secondary);
+        font-size: clamp(1rem, 0.518vw + 0.879rem, 1.5rem);
+        line-height: clamp(1.3rem, 0.673vw + 1.142rem, 1.95rem);
+    }
 
-            img {
-                display: inline;
-            }
-        }
+    .wysiwyg > * {
+        margin-bottom: 1rem;
+    }
+
+    .wysiwyg h1,
+    .wysiwyg h2,
+    .wysiwyg h3,
+    .wysiwyg h4,
+    .wysiwyg h5 {
+        margin-bottom: 1rem;
+    }
+
+    .wysiwyg ul,
+    .wysiwyg ol {
+        padding: 0.5rem 2rem 0;
+    }
+
+    .wysiwyg ul {
+        list-style-type: disc;
+    }
+
+    .wysiwyg ol {
+        list-style-type: decimal;
+    }
+
+    .wysiwyg li {
+        padding-bottom: 0.5rem;
+    }
+
+    .wysiwyg picture {
+        display: block;
+    }
+
+    .wysiwyg picture img {
+        display: inline;
+    }
+
+    .body-xl {
+        font-size: 1.5rem;
+        line-height: 1.3;
+    }
+
+    .body-lg {
+        font-size: 1.25rem;
+        line-height: 1.3;
+    }
+
+    .body-md {
+        font-size: 1rem;
+        line-height: 1.3;
+    }
+
+    .body-sm {
+        font-size: 0.875rem;
+        line-height: 1.3;
+    }
+
+    .body-xs {
+        font-size: 0.6875rem;
+        line-height: 1.3;
+    }
+
+    .heading-4xl {
+        font-size: 4rem;
+        line-height: 1.25;
+    }
+
+    .heading-3xl {
+        font-size: 4rem;
+        line-height: 1.25;
+    }
+
+    .heading-2xl {
+        font-size: 2.625rem;
+        line-height: 1.25;
+    }
+
+    .heading-xl {
+        font-size: 2.25rem;
+        line-height: 1.25;
+    }
+
+    .heading-lg {
+        font-size: 1.25rem;
+        line-height: 1.25;
+    }
+
+    .heading-sm {
+        font-size: 1rem;
+        line-height: 1.25;
+    }
+
+    .button-text {
+        font-family: var(--font-primary);
+        font-size: 1.25rem;
+        font-weight: 400;
+        line-height: 1.25;
+        text-transform: uppercase;
+    }
+
+    .label-text {
+        font-family: var(--font-primary);
+        font-size: 0.65rem;
+        line-height: 1.25;
+    }
+
+    .link-text {
+        font-size: 1.25rem;
+        line-height: 1.25;
+    }
+
+    .link-text:hover {
+        text-decoration: underline;
+    }
+
+    .nav-text {
+        font-family: var(--font-primary);
+        font-size: 1rem;
+        line-height: 1.25;
+        text-transform: uppercase;
+    }
+
+    .placeholder-text {
+        font-size: 1rem;
+        line-height: 1.25;
+    }
+
+    article .payload-richtext > * + * {
+        margin-top: var(--p-m);
+    }
+}
+
+@media screen and (min-width: 640px) {
+    .label-text {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .wysiwyg h1,
+    .wysiwyg h2,
+    .wysiwyg h3,
+    .wysiwyg h4,
+    .wysiwyg h5 {
+        margin-bottom: 1.5rem;
     }
 }
