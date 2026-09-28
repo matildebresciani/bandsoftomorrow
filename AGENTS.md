@@ -1,8 +1,18 @@
 ## Project context
 
-`bandsoftomorrow` is the new, cleaned-up Payload/Next.js boilerplate for the Bands of Tomorrow exam project. The previous implementation lives in `/Users/matildebresciani/Documents/bands-of-tomorrow-eksamen` and is the source of the existing editorial content and migration requirements. Make changes in this repository unless the task explicitly targets the old project.
+`bandsoftomorrow` is the new, cleaned-up Payload/Next.js boilerplate for the Bands of Tomorrow exam project. The previous implementation lives in `/Users/matildebresciani/Documents/bands-of-tomorrow-eksamen` and provides code, design, and content references. Both WordPress and the old Payload project are content migration sources. Make changes in this repository unless the task explicitly targets the old project.
 
 The application is a monorepo. The main web application is in `apps/web`, with source code in `apps/web/src`. It uses Next.js, React, TypeScript, Payload CMS, MongoDB through Payload's MongoDB adapter, `next-intl`, Tailwind CSS, and Biome.
+
+## Feature approval workflow
+
+- Implement one feature/checkpoint at a time, including only its necessary wiring. Avoid unrelated refactors.
+- Complete the relevant checks before presenting the feature for review.
+- Explain what changed, list the changed files, describe how to inspect the result, and report checks and limitations. Provide a suitable review surface such as a diff, CMS example, rendered component, screenshot, or migration report.
+- Stop after each checkpoint and wait for explicit user approval before starting the next one. Approval of the overall roadmap does not authorize completing every feature without stopping.
+- Requests for adjustments keep the current checkpoint open. Make and verify those corrections before presenting it again.
+- If an unplanned feature is required, explain the dependency and revise the sequence with the user before expanding scope.
+- The first checkpoint changes only this `AGENTS.md`; application implementation belongs to later checkpoints.
 
 ## Current architectural direction
 
@@ -17,23 +27,95 @@ The application is a monorepo. The main web application is in `apps/web`, with s
 All editorial articles are represented by one Payload `posts` collection. Do not create separate collections or top-level content routes for interviews, reviews, or weekly releases.
 
 - `posts` is the single collection for interviews, reviews, `ugens-udgivelser`, news, and future editorial post types.
-- Use the `post-categories` relationship to classify posts. The old article types should become categories rather than separate collections or route trees.
-- Add and use a `tags` collection for many-to-many post tags. Tags are separate from categories and should be reusable across posts.
+- Replace `post-categories` with `tag-groups` and `tags`. Each tag belongs to exactly one group, and posts can reference multiple reusable tags. Posts select tags rather than separately selecting groups.
+- The initial tag groups are Article type, Review type, Genre, Topic, and Artist. Use stable slugs and localized display names.
+- Replace fixed article classification and artist fields with tag relationships. Map existing article types, review subtypes, genres, and artist values explicitly rather than losing their meaning.
+- Use a separate public `authors` collection with names, optional biographies, and portraits. Authors do not require CMS accounts; posts reference authors in display order.
 - Keep post routes generic (`posts`/localized equivalent and a post slug). Do not encode category or article type into the canonical post route.
-- Concerts and galleries are out of scope for the current migration and application model. Do not add them while working on the current posts/categories/tags refactor unless explicitly requested.
-- Preserve common editorial concepts such as title, slug, publication/update dates, status, excerpt, rich content, author, featured media, categories, tags, and related posts where they are needed for migration or presentation.
+- Use one generic post archive with search, pagination, and grouped tag filters represented in the URL. Defer dedicated tag pages.
+- All CMS users are trusted publishers. Support draft/public publishing and working preview; defer approval roles and workflows. Keep unpublished content inaccessible to anonymous visitors.
+- Preserve title, slug, publication/update dates, publication status, excerpt, rich content, authors, featured media, tags, related posts, and SEO data needed for migration or presentation.
 
-## WordPress migration compatibility
+## Editorial blocks and components
+
+- Use a fixed post frame that renders the title, featured image, excerpt, publication date, byline, and related posts from post-level fields. Do not make editors recreate these sections as body blocks.
+- The flexible post body supports Paragraph, Media, Quote, Embed, and Divider blocks. Media includes single images and simple image grids with captions and attribution; structured embeds initially support Spotify and YouTube.
+- Keep separate Editorial Hero, Latest Posts, Featured Post, and Post Slider blocks. Share post queries and card components underneath these editor-facing blocks.
+- Distinguish the curated Editorial Hero from the new boilerplate's text Hero; they serve different purposes.
+- Adapt the old post-card visual variants to the new model. Remove dependencies on fixed article types and old article collections.
+- Use manual related-post selections first, then shared-tag recommendations. Respect publication status and preserve manual ordering.
+- Reuse the new shared components, collection/field templates, and styling foundations. Use the old implementation as a reference for branding and useful layouts rather than copying it wholesale.
+- Keep supported saved layouts reusable without allowing recursive saved-layout nesting.
+
+## First-release scope and deferred features
+
+- The first release covers editorial posts, the homepage, the searchable/filterable archive, and basic information pages.
+- Defer team/recruitment features, forms, reusable quote libraries and quote sliders, concerts, standalone galleries, and dedicated author/tag landing pages.
+- Inline article images/grids and inline quotes remain in scope; they do not require standalone galleries or a quote library.
+- Retain existing FAQ records, but defer the FAQ presentation block. Defer standalone Heading and Text Card blocks; use supported rich text and Text Image content for initial information pages.
+- Preserve source data for deferred features even when their collections, blocks, and frontend presentation are not carried into the first release.
+
+## WordPress and old Payload migration compatibility
 
 The old WordPress API represents this content as `type: "post"`. A representative record includes `id`, `date`, `modified`, `slug`, `status`, rendered `title`, rendered HTML `content`, rendered `excerpt`, `author`, `featured_media`, numeric `categories`, numeric `tags`, and a legacy `link`.
 
 When adding or changing fields, preserve straightforward migration paths:
 
-- Map WordPress posts into Payload `posts`, rather than splitting them by old article URL (`anmeldelser`, `interviews`, or `ugens-udgivelser`).
-- Map WordPress categories to `post-categories` and WordPress `post_tag` terms to `tags`.
-- Retain source identifiers, dates, publication status, slugs, and legacy URLs when a migration/redirect field is required; do not discard them casually.
+- Map WordPress posts and old Payload articles into `posts`, rather than splitting them by old article URL (`anmeldelser`, `interviews`, or `ugens-udgivelser`).
+- Map WordPress categories and `post_tag` terms, plus old Payload genres, article types, review subtypes, and artist values, into grouped tags through explicit mappings. Do not recreate `post-categories` as the destination taxonomy.
+- Audit available source exports for actual collection/block usage, locales, relationships, and legacy URLs before defining content mappings. Repository code alone does not establish which features have stored content; report missing source access explicitly.
+- Preserve complete source snapshots, including deferred and unsupported content. Retain source-system identifiers, original dates and statuses, slugs, legacy URLs, and original content separately from new-system metadata.
+- Flag conflicting WordPress/Payload versions for explicit review. Do not silently prefer either source or merge records solely because titles or names match.
+- Convert old block-level author selections into post-level author relationships and report disagreements. Public author profiles remain separate from login accounts.
+- Convert imported content into supported body blocks, retaining media references, captions, attribution, ordering, and internal links. Report unsupported content and keep affected imports unpublished rather than silently discarding it.
+- Keep imports repeatable through stable source identifiers, with dry-run reports and safe reruns that do not create duplicate records.
 - Prefer stable relationships and explicit migration metadata over one-off hardcoded ID mappings.
-- Keep imported article content capable of representing the existing WordPress post body and media references. Migration-specific code should be isolated from normal frontend rendering code.
+- Isolate WordPress and old Payload migration adapters from normal frontend rendering code. Resolve relationships and legacy redirects against the new records.
+
+## Implementation checkpoints
+
+Each item is a separate deliverable and approval stop, in this order:
+
+1. Project instructions (`AGENTS.md` only).
+2. Migration inventory from available exports, including missing-access and unsupported-content reports.
+3. Tag groups collection.
+4. Tags collection and group relationship.
+5. Posts taxonomy integration, preserving existing assignments.
+6. Authors collection.
+7. Post authors integration and old author mapping rules.
+8. Draft/public publishing, preview, and public access.
+9. Generic localized post routing and link generation.
+10. Shared post card and visual variants.
+11. Fixed post frame.
+12. Paragraph block and imported rich-text formatting.
+13. Media block for single images and simple grids.
+14. Quote block.
+15. Structured Spotify/YouTube Embed block.
+16. Divider block styling and post-body integration.
+17. Related posts.
+18. Editorial Hero.
+19. Latest Posts.
+20. Featured Post.
+21. Post Slider.
+22. Post archive with server-side search, grouped filters, pagination, and URL state.
+23. Header and desktop/mobile navigation.
+24. Footer.
+25. Saved layouts using supported blocks without recursive nesting.
+26. Basic information pages using supported layouts.
+27. WordPress importer with dry run and repeatable imports.
+28. Old Payload importer for articles, supported layouts, references, and relevant settings.
+29. Conflict resolution and legacy redirects.
+30. Release verification, import reconciliation, and representative page review.
+
+## Validation by checkpoint
+
+- Collection changes: validate relationships, access, localization, and generated types.
+- Publishing: verify public pages, APIs, lists, and caches do not expose drafts, and that authenticated preview can display them.
+- Components: check representative content, responsive layouts, keyboard behavior, heading hierarchy, image descriptions, and reduced motion where relevant.
+- Archive: verify combined filters, search, pagination, reloads, and browser navigation.
+- Imports: verify safe reruns, preserved metadata, unresolved relationships, unsupported content, and conflicting records.
+- Routing: verify localized URLs, previews, canonical metadata, sitemaps, and legacy redirects.
+- Run applicable TypeScript/Biome checks and focused tests for each checkpoint; run the production build at integration milestones. Documentation-only changes need diff and consistency checks rather than application tests.
 
 ## Styling and CSS
 
