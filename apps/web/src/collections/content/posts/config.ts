@@ -56,6 +56,15 @@ export const Posts = createRoutedCollection(slug, {
                             relationTo: slug,
                         },
                         {
+                            name: 'tags',
+                            type: 'relationship',
+                            admin: {
+                                position: 'sidebar',
+                            },
+                            hasMany: true,
+                            relationTo: 'tags',
+                        },
+                        {
                             name: 'categories',
                             type: 'relationship',
                             admin: {

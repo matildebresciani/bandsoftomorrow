@@ -14,6 +14,8 @@ import { Pages } from './collections/content/pages/config';
 import { Posts } from './collections/content/posts/config';
 import { Faqs } from './collections/entries/faqs/config';
 import { SavedLayouts } from './collections/entries/saved-layouts/config';
+import { TagGroups } from './collections/taxonomies/tag-groups/config';
+import { Tags } from './collections/taxonomies/tags/config';
 import { ApiKeys } from './collections/tools-settings/api-keys/config';
 import { Navigation } from './collections/tools-settings/navigation/config';
 import { Options } from './collections/tools-settings/options/config';
@@ -68,6 +70,8 @@ export default buildConfig({
         Pages,
         Posts,
         PostCategories,
+        TagGroups,
+        Tags,
         Media,
         Icons,
         SavedLayouts,
