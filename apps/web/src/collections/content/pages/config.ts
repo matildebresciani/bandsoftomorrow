@@ -3,6 +3,7 @@ import { Embed } from '@/collections/embed/config';
 import { Divider } from '@/components/organisms/blocks/divider/config';
 import { EditorialHero } from '@/components/organisms/blocks/editorial-hero/config';
 import { Hero } from '@/components/organisms/blocks/hero/config';
+import { LatestPosts } from '@/components/organisms/blocks/latest-posts/config';
 import { Paragraph } from '@/components/organisms/blocks/paragraph/config';
 import { SavedLayoutsBlock } from '@/components/organisms/blocks/saved-layouts/config';
 import { TextImage } from '@/components/organisms/blocks/text-image/config';
@@ -12,7 +13,7 @@ import { populatePublishedAt } from '../../../lib/hooks/populate-published-at';
 import { enforceHomepage } from './hooks/enforce-homepage';
 
 const collection = 'pages';
-const blocks: Block[] = [Divider, Embed, Hero, EditorialHero, Paragraph, TextImage, SavedLayoutsBlock];
+const blocks: Block[] = [Divider, Embed, Hero, EditorialHero, LatestPosts, Paragraph, TextImage, SavedLayoutsBlock];
 
 export const Pages = createRoutedCollection(collection, {
     defaultPopulate: {

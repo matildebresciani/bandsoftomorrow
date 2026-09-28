@@ -8,9 +8,10 @@ import {
     getArticleCardData,
 } from './article-card-shared';
 
-const ArticleCardLarge = ({ post, locale, className }: ArticleCardProps) => {
+const ArticleCardLarge = ({ post, locale, className, headingLevel = 2 }: ArticleCardProps) => {
     const { href, tag, date } = getArticleCardData(post, locale);
     if (!href) return null;
+    const Heading = headingLevel === 3 ? 'h3' : 'h2';
 
     return (
         <Link
@@ -32,7 +33,7 @@ const ArticleCardLarge = ({ post, locale, className }: ArticleCardProps) => {
                 <div className="body-md mb-s">
                     {date && <time dateTime={post.publishedAt ?? undefined}>{date}</time>}
                 </div>
-                <h2 className="heading-4 line-clamp-4 uppercase">{post.title}</h2>
+                <Heading className="heading-4 line-clamp-4 uppercase">{post.title}</Heading>
             </div>
         </Link>
     );

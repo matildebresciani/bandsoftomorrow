@@ -7,13 +7,17 @@ import { selectEditorialTag } from '@/lib/utilities/select-editorial-tag';
 import { cn } from '@/lib/utilities/ui';
 import type { Post } from '@/payload-types';
 
+/** Fields used by every article card, including cards backed by a selective feed query. */
+export type ArticleCardPost = Pick<Post, 'id' | 'title' | 'slug' | 'publishedAt' | 'tags' | 'contentMeta'>;
+
 export type ArticleCardProps = {
-    post: Post;
+    post: ArticleCardPost;
     locale: Locale;
     className?: string;
+    headingLevel?: 2 | 3;
 };
 
-export const getArticleCardData = (post: Post, locale: Locale) => {
+export const getArticleCardData = (post: ArticleCardPost, locale: Locale) => {
     const eligibleTags = post.tags?.filter((tag) => {
         if (typeof tag !== 'object' || tag === null) return false;
         const badgeTag = toTagBadgeTag(tag);
@@ -31,7 +35,15 @@ export const getArticleCardData = (post: Post, locale: Locale) => {
     };
 };
 
-export const ArticleCardImage = ({ post, className, sizes }: { post: Post; className?: string; sizes: string }) => {
+export const ArticleCardImage = ({
+    post,
+    className,
+    sizes,
+}: {
+    post: ArticleCardPost;
+    className?: string;
+    sizes: string;
+}) => {
     const image = post.contentMeta?.featuredImage;
 
     return (
