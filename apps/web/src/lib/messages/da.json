@@ -11,5 +11,10 @@
         "noGroups": "Ingen taggrupper er tilknyttet indlæg",
         "error": "Tags kunne ikke indlæses. Dine valg er bevaret. Prøv igen.",
         "unavailable": "Utilgængeligt tag"
+    },
+    "postArchive": {
+        "title": "Artikler",
+        "empty": "Der er endnu ikke udgivet artikler her.",
+        "page": "Side {pageNumber}"
     }
 }

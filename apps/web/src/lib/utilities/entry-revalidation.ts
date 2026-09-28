@@ -13,8 +13,9 @@ export const revalidateEntry = (doc: Page | Person | Post, collection: Collectio
         });
     }
 
-    // Revalidating entire collection to hit the archive page
-    revalidateTag(collection, 'max');
+    // Removed posts or tag slugs must not serve previous archive results while refreshing.
+    const shouldExpireImmediately = collection === 'posts' || collection === 'tags';
+    revalidateTag(collection, shouldExpireImmediately ? { expire: 0 } : 'max');
     revalidateTag(`${collection}-sitemap`, 'max');
     revalidateTag(`${collection}-by-id_${doc.id}`, 'max');
     revalidateTag(`${collection}-by-slug_${doc.slug}`, 'max');

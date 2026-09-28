@@ -32,6 +32,7 @@ export default defineConfig({
                 test: {
                     name: 'unit',
                     environment: 'node',
+                    server: { deps: { inline: ['next-intl'] } },
                     include: ['src/**/*.test.{ts,tsx}'],
                     exclude: ['**/*.stories.test.{ts,tsx}', '**/node_modules/**'],
                     clearMocks: true,

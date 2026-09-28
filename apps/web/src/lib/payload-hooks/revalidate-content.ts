@@ -11,12 +11,15 @@ import { revalidateEntry } from '../utilities/entry-revalidation';
 export const createAfterChangeRevalidateHook = (slug: CollectionSlug): CollectionAfterChangeHook => {
     return ({ doc, previousDoc, req: { context } }) => {
         if (!context.disableRevalidate) {
-            if (doc._status === 'published') {
+            const isPublished = doc.publishStatus === 'public' || doc._status === 'published';
+            const wasPublished = previousDoc?.publishStatus === 'public' || previousDoc?._status === 'published';
+            const hasPublicationState = 'publishStatus' in doc || '_status' in doc;
+            if (isPublished || !hasPublicationState) {
                 revalidateEntry(doc, slug);
             }
 
             // If the page was previously published, we need to revalidate the old path
-            if (previousDoc?._status === 'published' && doc._status !== 'published') {
+            if (wasPublished && (!isPublished || previousDoc.slug !== doc.slug)) {
                 revalidateEntry(previousDoc, slug);
             }
         }

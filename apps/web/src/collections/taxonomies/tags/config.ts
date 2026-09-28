@@ -45,6 +45,10 @@ export const Tags = createCollection('tags', {
             collection: 'posts',
             on: 'tags',
         },
-        ...slugField('tag'),
+        ...slugField('tag', {
+            slugOverrides: {
+                unique: true,
+            },
+        }),
     ],
 });

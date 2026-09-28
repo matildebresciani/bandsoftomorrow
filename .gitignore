@@ -50,3 +50,5 @@ devenv.local.nix
 
 static
 data
+# Application query helpers are source code, not local database storage.
+!apps/web/src/lib/data/

@@ -48,7 +48,7 @@ export const formatPaginationLink = (
         }
     }
 
-    if (newPageNumber === null || newPageNumber <= 0) {
+    if (newPageNumber === null || newPageNumber <= 0 || (type === 'path' && route === 'posts' && newPageNumber === 1)) {
         return baseLink;
     }
 

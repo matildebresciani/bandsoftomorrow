@@ -39,7 +39,8 @@ All editorial articles are represented by one Payload `posts` collection. Do not
 - Galleries is deferred until explicitly requested again. Keep existing collections and assignments intact; taxonomy replacement and migration follow separately.
 - Concerts is a non-routed collection using `createCollection`, with featured image, artist, support act, venue, city, date, and ticket link. All seven fields are optional. Keep it out of routed-collection registration; no individual concert pages are planned for this checkpoint.
 - Keep post routes generic (`posts`/localized equivalent and a post slug). Do not encode category or article type into the canonical post route.
-- Use one generic post archive with search, pagination, and grouped tag filters represented in the URL. Defer dedicated tag pages.
+- Use one generic post archive at `/posts` (`/artikler` in Danish), with shared tag archives at `/posts/[tag]` (`/artikler/[tag]`). Resolve the localized tag slug directly; unknown tags return 404 without falling back to old categories. Keep tag slugs unique within each locale. Tag groups organize editor choices and future filters; they do not create routes or gate existing tag archives.
+- Keep archive code and canonical route definitions in English in the existing localized-collections and routing configuration. Danish remains the default locale without a prefix; English uses `/en`. Search and grouped filter controls remain a later checkpoint.
 - All CMS users are trusted publishers. Support draft/public publishing and working preview; defer approval roles and workflows. Keep unpublished content inaccessible to anonymous visitors.
 - Preserve title, slug, publication/update dates, publication status, excerpt, rich content, authors, featured media, tags, related posts, and SEO data needed for migration or presentation.
 
@@ -58,7 +59,7 @@ All editorial articles are represented by one Payload `posts` collection. Do not
 
 - The first release covers editorial posts, the homepage, the searchable/filterable archive, and basic information pages.
 - People and Concerts collections are in scope; Galleries is deferred. Frontend pages, blocks, and migration wiring are separate checkpoints; adding a collection does not authorize implementing all related features.
-- Defer team/recruitment presentation, forms, reusable quote libraries and quote sliders, and dedicated people/tag landing pages until their own checkpoints.
+- Defer team/recruitment presentation, forms, reusable quote libraries and quote sliders, and dedicated people profiles or custom tag landing-page layouts until their own checkpoints. Shared tag archive listings are part of routing.
 - Inline article images/grids and inline quotes remain in scope; they do not require standalone galleries or a quote library.
 - Retain existing FAQ records, but defer the FAQ presentation block. Defer standalone Heading and Text Card blocks; use supported rich text and Text Image content for initial information pages.
 - Preserve source data for deferred features even when their collections, blocks, and frontend presentation are not carried into the first release.
@@ -82,7 +83,7 @@ When adding or changing fields, preserve straightforward migration paths:
 
 ## Implementation checkpoints
 
-Each item is a separate deliverable and approval stop unless explicitly combined by the user. After People and Concerts, the current checkpoint combines post authors and the grouped tag picker. Galleries is deferred; the source inventory remains required before migration work.
+Each item is a separate deliverable and approval stop unless explicitly combined by the user. Following the combined post-authors/grouped-tag-picker checkpoint, the current checkpoint is shared localized tag archive routing (item 11), including simple listings, pagination, metadata, sitemaps, and necessary cache invalidation. Galleries is deferred; the source inventory remains required before migration work.
 
 1. Project instructions (`AGENTS.md` only).
 2. Migration inventory from available exports, including missing-access and unsupported-content reports.
@@ -94,7 +95,7 @@ Each item is a separate deliverable and approval stop unless explicitly combined
 8. Grouped Posts tag picker and ordered post authors through People (one combined review checkpoint, keeping categories and existing assignments).
 9. Remaining taxonomy integration and source-author mapping rules, after the migration inventory.
 10. Draft/public publishing, preview, and public access.
-11. Generic localized post routing and link generation.
+11. Generic localized post routing and shared tag archive routes, link generation, simple listings, pagination, metadata, and sitemaps. Preserve category records and assignments, but use tags only for archive slugs; no separate archive mappings in Options.
 12. Shared post card and visual variants.
 13. Fixed post frame.
 14. Paragraph block and imported rich-text formatting.

@@ -1,97 +1,42 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import { setRequestLocale } from 'next-intl/server';
-import type { Where } from 'payload';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Pagination from '@/components/molecules/frontend/Pagination';
 import { generateArchiveMetadata } from '@/lib/data/metadata';
-import { getCachedCollection } from '@/lib/data/payload/get-cached-collection';
-import { pageNumberSchema } from '@/lib/schemas/pages';
-import { assertLocale } from '@/lib/utilities/assert-locale';
+import { getPostArchivePage } from '@/lib/data/post-archive';
 import { formatLinkByCollection } from '@/lib/utilities/format-link';
-import { payloadRedirects } from '@/lib/utilities/payload-redirects';
 
 type Props = {
-    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
     params: Promise<{
         locale: string;
-        slug?: string;
-        pageNumber?: string | number;
+        tag?: string;
+        pageNumber?: string;
     }>;
 };
 
-const collection = 'posts';
+export const dynamic = 'force-dynamic';
 
-export default async function PostsPage({ params: paramsPromise, searchParams: searchParamsPromise }: Props) {
-    const searchParams = await searchParamsPromise;
-    const { locale, slug, pageNumber } = await paramsPromise;
-
-    assertLocale(locale);
-
-    // Checking if there is a redirect from the Payload collection for the current slug
-    const formattedLink = formatLinkByCollection(slug, collection, locale);
-    if (formattedLink) {
-        await payloadRedirects(formattedLink);
-    }
-
-    setRequestLocale(locale);
-
-    const pageNumberValidation = pageNumberSchema.safeParse(pageNumber);
-    if (!pageNumberValidation.success) {
-        notFound();
-    }
-
-    const sanitizedPageNumber = pageNumberValidation.data ?? 1;
-
-    const formattedSearchParams = Object.values(searchParams).flatMap((value) => {
-        const splitValues = (Array.isArray(value) ? value[0] : value)?.split(',');
-        return splitValues;
-    });
-
-    const querySlug: Where = slug
-        ? {
-              'categories.slug': {
-                  equals: slug,
-              },
-          }
-        : {};
-
-    const queryFilters: Where = formattedSearchParams.length
-        ? {
-              'categories.slug': {
-                  in: formattedSearchParams,
-              },
-          }
-        : {};
-
-    const where: Where = {
-        ...querySlug,
-        ...queryFilters,
-    };
-
-    const entries = await getCachedCollection({
-        collection,
-        locale,
-        limit: 12,
-        page: sanitizedPageNumber,
-        depth: 1,
-        whereFields: where,
-        sort: '-publishedAt',
-    });
+export default async function PostsPage({ params }: Props) {
+    const { locale, tag, pageNumber } = await params;
+    const archive = await getPostArchivePage(locale, tag, pageNumber);
+    setRequestLocale(archive.locale);
+    const t = await getTranslations({ locale: archive.locale, namespace: 'postArchive' });
+    const title = archive.tag?.tag || archive.tag?.name || t('title');
 
     return (
         <article>
             <div className="base-block oakgrid mt-6 lg:mt-16">
                 <div className="col-span-12">
-                    <h1 className="text-2xl font-medium lg:text-4xl">Posts</h1>
+                    <h1 className="text-2xl font-medium lg:text-4xl">{title}</h1>
                 </div>
             </div>
 
-            <section className="base-block-outer">
+            <div className="base-block-outer">
                 <div className="base-block oakgrid mt-6 lg:mt-10">
                     <div className="col-span-12 grid gap-y-10 gap-x-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-y-20">
-                        {entries.docs.map((entry) => {
-                            const link = formatLinkByCollection(entry.slug, collection, locale);
+                        {archive.entries.docs.length === 0 && <p>{t('empty')}</p>}
+                        {archive.entries.docs.map((entry) => {
+                            const link = formatLinkByCollection(entry.slug, 'posts', archive.locale);
                             if (!link) return null;
 
                             return (
@@ -102,32 +47,28 @@ export default async function PostsPage({ params: paramsPromise, searchParams: s
                         })}
                     </div>
                 </div>
-            </section>
+            </div>
 
             <Pagination
-                totalPages={entries.totalPages}
-                pageNumber={sanitizedPageNumber}
-                locale={locale}
+                totalPages={archive.entries.totalPages}
+                pageNumber={archive.currentPage}
+                locale={archive.locale}
                 className="my-6 lg:mt-20 lg:mb-16"
-                routeDetails={{
-                    route: collection,
-                    type: 'path',
-                    slug,
-                }}
+                routeDetails={archive.routeDetails}
             />
         </article>
     );
 }
 
-export async function generateMetadata({ params: paramsPromise }: Props): Promise<Metadata> {
-    const { locale, slug, pageNumber } = await paramsPromise;
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+    const { locale, tag, pageNumber } = await params;
+    const archive = await getPostArchivePage(locale, tag, pageNumber);
 
-    const metadata = await generateArchiveMetadata({
-        slug,
-        collection,
-        locale,
-        pageNumber,
+    return generateArchiveMetadata({
+        slug: tag,
+        title: archive.tag?.tag || archive.tag?.name,
+        collection: 'posts',
+        locale: archive.locale,
+        pageNumber: archive.currentPage,
     });
-
-    return metadata;
 }

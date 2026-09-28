@@ -24,22 +24,22 @@ export const routing = defineRouting({
     pathnames: {
         '/': '/',
 
-        // Possible routes for Posts collection Archives
+        // Shared Posts archive, tag archives, and localized pagination
         '/posts': {
-            en: `/${localizedPaths.posts.en}/`,
-            da: `/${localizedPaths.posts.da}/`,
+            en: `/${localizedPaths.posts.en}`,
+            da: `/${localizedPaths.posts.da}`,
         },
         '/posts/page/[pageNumber]': {
             en: `/${localizedPaths.posts.en}/${paginationTranslations.page.en}/[pageNumber]`,
             da: `/${localizedPaths.posts.da}/${paginationTranslations.page.da}/[pageNumber]`,
         },
-        '/posts/[slug]': {
-            en: `/${localizedPaths.posts.en}/[slug]`,
-            da: `/${localizedPaths.posts.da}/[slug]`,
+        '/posts/[tag]': {
+            en: `/${localizedPaths.posts.en}/[tag]`,
+            da: `/${localizedPaths.posts.da}/[tag]`,
         },
-        '/posts/[slug]/page/[pageNumber]': {
-            en: `/${localizedPaths.posts.en}/[slug]/${paginationTranslations.page.en}/[pageNumber]`,
-            da: `/${localizedPaths.posts.da}/[slug]/${paginationTranslations.page.da}/[pageNumber]`,
+        '/posts/[tag]/page/[pageNumber]': {
+            en: `/${localizedPaths.posts.en}/[tag]/${paginationTranslations.page.en}/[pageNumber]`,
+            da: `/${localizedPaths.posts.da}/[tag]/${paginationTranslations.page.da}/[pageNumber]`,
         },
 
         // Possible routes for Posts collection

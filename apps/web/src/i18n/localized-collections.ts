@@ -22,7 +22,7 @@ export const isLocalizableCollection = <const T extends CollectionSlug>(
 };
 
 /**
- * Contains the paths that are localized but not created as collections in Payload, mainly used by next-intl
+ * Contains the paths that are localized but not created as collections in Payload, including the shared Posts archive and its tag routes, used by next-intl
  * @example { search: { en: 'search', da: 'sog' } }
  */
 export const localizedPaths = {
