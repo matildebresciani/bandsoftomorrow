@@ -192,7 +192,7 @@ Although Next.js includes a robust set of caching strategies out of the box, Pay
 
 ## Development
 
-To spin up this example locally, follow the [Quick Start](#quick-start). Then [Seed](#seed) the database with a few pages, posts, and projects.
+To spin up this example locally, follow the [Quick Start](#quick-start). Then [Seed](#seed) the database with sample pages, posts, tags, and a person.
 
 ### Working with Postgres
 
@@ -238,15 +238,9 @@ That's it! The Docker instance will help you get up and running quickly while al
 
 ### Seed
 
-To seed the database with a few pages, posts, and projects you can click the 'seed database' link from the admin panel.
-
-The seed script will also create a demo user for demonstration purposes only:
-
-- Demo Author
-  - Email: `demo-author@payloadcms.com`
-  - Password: `password`
-
-> NOTICE: seeding the database is destructive because it drops your current database to populate a fresh one from the seed template. Only run this command if you are starting a new project or can afford to lose your current data.
+With MongoDB running and `DATABASE_URI` configured in `.env.development`, run `pnpm seed` from `apps/web`.
+The command adds sample media, five tag groups, three tags, an example person, two posts, two pages, and a main menu.
+Running it again skips records with the same seed names, so your edits to those records are preserved. It does not create a CMS user or delete existing content.
 
 ## Production
 

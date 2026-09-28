@@ -4,6 +4,7 @@ import EmbedBlock from '@/collections/embed/Embed';
 import type { Locale, RoutedCollectionSlug } from '@/i18n/localized-collections';
 import type { Page, Post } from '@/payload-types';
 import DividerBlock from './divider/Divider';
+import EditorialHeroBlock from './editorial-hero/EditorialHero';
 import HeroBlock from './hero/Hero';
 import ParagraphBlock from './paragraph/Paragraph';
 import SavedLayoutsBlock from './saved-layouts/SavedLayouts';
@@ -11,6 +12,7 @@ import TextImageBlock from './text-image/TextImage';
 
 const blockComponents = {
     hero: HeroBlock,
+    'editorial-hero': EditorialHeroBlock,
     paragraph: ParagraphBlock,
     'text-image': TextImageBlock,
     divider: DividerBlock,

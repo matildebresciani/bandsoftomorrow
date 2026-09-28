@@ -1,21 +1,22 @@
 import type { Post } from '@/payload-types';
 import { seededParagraphBlock } from './paragraph';
 
-export const getPost1Seed = (mediaId?: string | null): Omit<Post, 'id' | 'createdAt' | 'updatedAt'> => {
+export const getPost1Seed = (
+    mediaId: string,
+    authorId: string,
+    tagIds: string[],
+): Omit<Post, 'id' | 'createdAt' | 'updatedAt'> => {
     return {
-        title: 'Why obundle is Your Top Choice',
-        name: 'Post 1',
-        slug: 'post-1',
+        title: 'Example: New music on the horizon',
+        name: 'Example post: New music',
+        slug: 'example-new-music',
         publishStatus: 'public',
         layout: [seededParagraphBlock()],
-        ...(mediaId && {
-            contentMeta: {
-                featuredImage: mediaId,
-                excerpt:
-                    'Discover why obundle is the top choice for modern businesses. Learn about its key features and benefits.',
-            },
-        }),
+        authors: [authorId],
+        tags: tagIds,
+        contentMeta: {
+            featuredImage: mediaId,
+            excerpt: 'A sample editorial post for trying the post archive and tags.',
+        },
     };
 };
-
-export const post1Seed = getPost1Seed();

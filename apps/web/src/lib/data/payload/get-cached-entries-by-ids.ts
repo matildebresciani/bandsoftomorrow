@@ -14,6 +14,7 @@ type Props<C extends CollectionSlug> = {
     sort?: Sort;
     select?: TypedCollectionSelect[C];
     publicOnly?: boolean;
+    additionalCacheTags?: string[];
     /**
      * If true, the returned entries will be sorted in the same order as the provided IDs and override the `sort` prop.
      */
@@ -31,6 +32,7 @@ export const getCachedEntriesByIds = cache(async <C extends CollectionSlug>(prop
         select,
         publicOnly = true,
         sortByIds,
+        additionalCacheTags = [],
     } = props;
     const { isEnabled: draft } = await draftMode();
     const filterPublicOnly = publicOnly ? { publishStatus: { equals: 'public' } } : undefined;
@@ -87,7 +89,7 @@ export const getCachedEntriesByIds = cache(async <C extends CollectionSlug>(prop
         },
         [],
         {
-            tags: [...ids.map((id) => `${collection}-by-id_${id}`), collection],
+            tags: [...ids.map((id) => `${collection}-by-id_${id}`), collection, ...additionalCacheTags],
         },
     )({ collection, limit, ids, sort, locale, select }, where);
 });

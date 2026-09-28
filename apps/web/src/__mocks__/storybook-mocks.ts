@@ -1,3 +1,4 @@
+import type { TagBadgeTag } from '@/components/atoms/frontend/labels/tag-badge';
 import type { Media } from '@/payload-types';
 
 export const imageMock: Media = {
@@ -12,6 +13,51 @@ export const imageMock: Media = {
     createdAt: '2025-10-17T00:00:00.000Z',
     updatedAt: '2025-10-17T00:00:00.000Z',
 };
+
+export const tagBadgeMocks = {
+    review: {
+        label: 'Anmeldelse',
+        name: 'Review',
+        slug: 'review',
+        groupName: 'Article type',
+        groupSlug: 'article-type',
+    },
+    concert: {
+        label: 'Koncert',
+        name: 'Concert',
+        slug: 'concert',
+        groupName: 'Review type',
+        groupSlug: 'review-type',
+    },
+    interview: {
+        label: 'Interview',
+        name: 'Interview',
+        slug: 'interview',
+        groupName: 'Article type',
+        groupSlug: 'article-type',
+    },
+    weeklyReleases: {
+        label: 'Ugens udgivelser',
+        name: 'Weekly releases',
+        slug: 'weekly-releases',
+        groupName: 'Article type',
+        groupSlug: 'article-type',
+    },
+    album: {
+        label: 'Album',
+        name: 'Album',
+        slug: 'album',
+        groupName: 'Review type',
+        groupSlug: 'review-type',
+    },
+    genre: {
+        label: 'Rock',
+        name: 'Rock',
+        slug: 'rock',
+        groupName: 'Genre',
+        groupSlug: 'genre',
+    },
+} satisfies Record<string, TagBadgeTag>;
 
 export const richTextMock = {
     root: {

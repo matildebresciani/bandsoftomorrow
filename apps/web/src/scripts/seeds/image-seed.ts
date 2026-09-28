@@ -1,21 +1,21 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import type { Payload } from 'payload';
+import { findExistingId } from './find-existing';
 
 export const seedMedia = async (payload: Payload) => {
-    const imagePath = path.join(process.cwd(), 'public/images/__mocks__/placeholder.jpg');
+    const imagePath = fileURLToPath(new URL('../../../public/images/__mocks__/placeholder.jpg', import.meta.url));
+    const fileName = path.basename(imagePath);
+    const existingId = await findExistingId(payload, 'media', 'filename', fileName);
+    if (existingId) return existingId;
 
-    // Check if file exists
     if (!fs.existsSync(imagePath)) {
-        payload.logger.error(`Image not found at ${imagePath}`);
-        return null;
+        throw new Error(`Seed image not found at ${imagePath}`);
     }
 
-    // Read the file
     const fileBuffer = fs.readFileSync(imagePath);
-    const fileName = path.basename(imagePath);
 
-    // Create media entry with file upload
     const media = await payload.create({
         collection: 'media',
         data: {
@@ -27,6 +27,7 @@ export const seedMedia = async (payload: Payload) => {
             name: fileName,
             size: fileBuffer.length,
         },
+        context: { disableRevalidate: true },
     });
 
     payload.logger.info(`✓ Seeded media: ${media.filename} (ID: ${media.id})`);

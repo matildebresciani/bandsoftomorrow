@@ -29,6 +29,13 @@
         min-height: min(var(--calc-h), 1500px);
     }
 
+    @media (min-width: 1280px) {
+        .svh-screen-incl-header,
+        .min-svh-screen-incl-header {
+            --calc-h: calc(100svh - var(--header-height-desktop));
+        }
+    }
+
     .lvh-screen {
         height: 100vh;
         height: 100lvh;
