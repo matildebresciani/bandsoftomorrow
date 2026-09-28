@@ -1,13 +1,21 @@
-import LogoImg from '@public/favicon.svg';
-import Image, { type ImageProps } from 'next/image';
-import type { FC } from 'react';
+import Image from 'next/image';
 import { cn } from '@/lib/utilities/ui';
 
-export type LogoProps = Omit<Partial<ImageProps>, 'src'>;
-
-const Logo: FC<LogoProps> = ({ className, ...rest }) => {
-    // TODO: Add brand to logo alt text
-    return <Image src={LogoImg} alt={'logo'} className={cn('max-w-8', className)} {...rest} />;
+type Props = {
+    variant?: 'full' | 'icon';
+    className?: string;
 };
+
+const Logo = ({ variant = 'icon', className }: Props) => (
+    <Image
+        src={variant === 'full' ? '/images/svgs/logo-big.svg' : '/images/svgs/logo-small.svg'}
+        alt=""
+        width={variant === 'full' ? 1620 : 78}
+        height={variant === 'full' ? 272 : 61}
+        className={cn(className)}
+        priority
+        unoptimized
+    />
+);
 
 export default Logo;
