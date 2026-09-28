@@ -1,5 +1,10 @@
 import type { PayloadRequest } from 'payload';
-import { isLocale, localizedCollections, type RoutedCollectionSlug } from '@/i18n/localized-collections';
+import {
+    isFrontendRoutedCollection,
+    isLocale,
+    localizedCollections,
+    type RoutedCollectionSlug,
+} from '@/i18n/localized-collections';
 import { getServerSideURL } from './get-url';
 
 export type PreviewProps = {
@@ -9,6 +14,8 @@ export type PreviewProps = {
 };
 
 export const generatePreviewPath = ({ collection, slug, req }: PreviewProps) => {
+    if (!isFrontendRoutedCollection(collection)) return null;
+
     const localePart = isLocale(req.locale) && req.locale;
 
     if (!localePart || typeof slug !== 'string') return null;

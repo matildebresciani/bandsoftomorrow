@@ -1,6 +1,6 @@
-import type { Field } from 'payload';
+import type { Field, SelectField } from 'payload';
 
-export const payloadPublishStatus: Field = {
+export const payloadPublishStatus: SelectField = {
     name: 'publishStatus',
     type: 'select',
     admin: {

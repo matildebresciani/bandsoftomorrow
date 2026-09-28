@@ -1,11 +1,11 @@
 import { revalidatePath, revalidateTag } from 'next/cache';
 import type { CollectionSlug } from 'payload';
-import { isRoutedCollection, locales } from '@/i18n/localized-collections';
-import type { Page, Post } from '@/payload-types';
+import { isFrontendRoutedCollection, locales } from '@/i18n/localized-collections';
+import type { Page, Person, Post } from '@/payload-types';
 import { formatLinkByCollection } from './format-link';
 
-export const revalidateEntry = (doc: Page | Post, collection: CollectionSlug) => {
-    if (isRoutedCollection(collection)) {
+export const revalidateEntry = (doc: Page | Person | Post, collection: CollectionSlug) => {
+    if (isFrontendRoutedCollection(collection)) {
         const localizedPaths = locales.map((locale) => formatLinkByCollection(doc.slug, collection, locale));
         console.log(`Revalidating ${collection} at path: ${doc.slug}`);
         localizedPaths.forEach((path) => {

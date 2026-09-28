@@ -3,10 +3,10 @@ import { draftMode } from 'next/headers';
 import { redirect } from 'next/navigation';
 import type { PayloadRequest } from 'payload';
 import z from 'zod';
-import { isLocale, routedCollections } from '@/i18n/localized-collections';
+import { frontendRoutedCollections, isLocale } from '@/i18n/localized-collections';
 import { initPayload } from '@/lib/config';
 
-const CollectionSlugSchema = z.enum(routedCollections);
+const CollectionSlugSchema = z.enum(frontendRoutedCollections);
 
 export async function GET(
     req: Request & {

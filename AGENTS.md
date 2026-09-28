@@ -30,7 +30,11 @@ All editorial articles are represented by one Payload `posts` collection. Do not
 - Replace `post-categories` with `tag-groups` and `tags`. Each tag belongs to exactly one group, and posts can reference multiple reusable tags. Posts select tags rather than separately selecting groups.
 - The initial tag groups are Article type, Review type, Genre, Topic, and Artist. Use stable slugs and localized display names.
 - Replace fixed article classification and artist fields with tag relationships. Map existing article types, review subtypes, genres, and artist values explicitly rather than losing their meaning.
-- Use a separate public `authors` collection with names, optional biographies, and portraits. Authors do not require CMS accounts; posts reference authors in display order.
+- Use one routed `people` collection for both authors and volunteers, independently of CMS login accounts. Do not create separate `authors` or `volunteers` collections.
+- People has one required non-localized `name`, optional localized plain-text `role` and rich-text `description`, an optional `profilePicture`, and an optional email readable only by authenticated CMS users. Do not add a separate title, display name, role group, biography, or duplicate featured-image/excerpt fields.
+- Generate editable People slugs from `name`, with draft/public publishing, publication dates, and version history. Reserve `/people/[slug]` in English and `/personer/[slug]` in Danish for future profiles and contribution archives.
+- Distinguish route-capable collections from collections with implemented frontend pages. Keep People out of page-link selectors, previews, and sitemaps until its frontend page exists. Post relationships to People are a separate checkpoint.
+- Add `concerts` and `galleries` as separate upcoming collection checkpoints. Keep existing collections and assignments intact while adding the new collections; taxonomy replacement and migration follow separately.
 - Keep post routes generic (`posts`/localized equivalent and a post slug). Do not encode category or article type into the canonical post route.
 - Use one generic post archive with search, pagination, and grouped tag filters represented in the URL. Defer dedicated tag pages.
 - All CMS users are trusted publishers. Support draft/public publishing and working preview; defer approval roles and workflows. Keep unpublished content inaccessible to anonymous visitors.
@@ -50,7 +54,8 @@ All editorial articles are represented by one Payload `posts` collection. Do not
 ## First-release scope and deferred features
 
 - The first release covers editorial posts, the homepage, the searchable/filterable archive, and basic information pages.
-- Defer team/recruitment features, forms, reusable quote libraries and quote sliders, concerts, standalone galleries, and dedicated author/tag landing pages.
+- People, Concerts, and Galleries collections are in scope. Their frontend pages, blocks, and migration wiring are separate checkpoints; adding a collection does not authorize implementing all related features.
+- Defer team/recruitment presentation, forms, reusable quote libraries and quote sliders, and dedicated people/tag landing pages until their own checkpoints.
 - Inline article images/grids and inline quotes remain in scope; they do not require standalone galleries or a quote library.
 - Retain existing FAQ records, but defer the FAQ presentation block. Defer standalone Heading and Text Card blocks; use supported rich text and Text Image content for initial information pages.
 - Preserve source data for deferred features even when their collections, blocks, and frontend presentation are not carried into the first release.
@@ -66,7 +71,7 @@ When adding or changing fields, preserve straightforward migration paths:
 - Audit available source exports for actual collection/block usage, locales, relationships, and legacy URLs before defining content mappings. Repository code alone does not establish which features have stored content; report missing source access explicitly.
 - Preserve complete source snapshots, including deferred and unsupported content. Retain source-system identifiers, original dates and statuses, slugs, legacy URLs, and original content separately from new-system metadata.
 - Flag conflicting WordPress/Payload versions for explicit review. Do not silently prefer either source or merge records solely because titles or names match.
-- Convert old block-level author selections into post-level author relationships and report disagreements. Public author profiles remain separate from login accounts.
+- Map old volunteers and author identities into People. Convert old block-level author selections into post-level relationships to People and report disagreements. Person profiles remain separate from login accounts; do not expose internal email in public output.
 - Convert imported content into supported body blocks, retaining media references, captions, attribution, ordering, and internal links. Report unsupported content and keep affected imports unpublished rather than silently discarding it.
 - Keep imports repeatable through stable source identifiers, with dry-run reports and safe reruns that do not create duplicate records.
 - Prefer stable relationships and explicit migration metadata over one-off hardcoded ID mappings.
@@ -74,38 +79,40 @@ When adding or changing fields, preserve straightforward migration paths:
 
 ## Implementation checkpoints
 
-Each item is a separate deliverable and approval stop, in this order:
+Each item is a separate deliverable and approval stop. The current priority is adding People, then Concerts, then Galleries before replacing existing collections or integrating frontend features; the source inventory remains required before migration work.
 
 1. Project instructions (`AGENTS.md` only).
 2. Migration inventory from available exports, including missing-access and unsupported-content reports.
 3. Tag groups collection.
 4. Tags collection and group relationship.
-5. Posts taxonomy integration, preserving existing assignments.
-6. Authors collection.
-7. Post authors integration and old author mapping rules.
-8. Draft/public publishing, preview, and public access.
-9. Generic localized post routing and link generation.
-10. Shared post card and visual variants.
-11. Fixed post frame.
-12. Paragraph block and imported rich-text formatting.
-13. Media block for single images and simple grids.
-14. Quote block.
-15. Structured Spotify/YouTube Embed block.
-16. Divider block styling and post-body integration.
-17. Related posts.
-18. Editorial Hero.
-19. Latest Posts.
-20. Featured Post.
-21. Post Slider.
-22. Post archive with server-side search, grouped filters, pagination, and URL state.
-23. Header and desktop/mobile navigation.
-24. Footer.
-25. Saved layouts using supported blocks without recursive nesting.
-26. Basic information pages using supported layouts.
-27. WordPress importer with dry run and repeatable imports.
-28. Old Payload importer for articles, supported layouts, references, and relevant settings.
-29. Conflict resolution and legacy redirects.
-30. Release verification, import reconciliation, and representative page review.
+5. Routed People collection, including template options and keeping future routes out of public links/previews/sitemaps.
+6. Concerts collection.
+7. Galleries collection.
+8. Posts taxonomy integration, preserving existing assignments.
+9. Post authors integration through People and old author mapping rules.
+10. Draft/public publishing, preview, and public access.
+11. Generic localized post routing and link generation.
+12. Shared post card and visual variants.
+13. Fixed post frame.
+14. Paragraph block and imported rich-text formatting.
+15. Media block for single images and simple grids.
+16. Quote block.
+17. Structured Spotify/YouTube Embed block.
+18. Divider block styling and post-body integration.
+19. Related posts.
+20. Editorial Hero.
+21. Latest Posts.
+22. Featured Post.
+23. Post Slider.
+24. Post archive with server-side search, grouped filters, pagination, and URL state.
+25. Header and desktop/mobile navigation.
+26. Footer.
+27. Saved layouts using supported blocks without recursive nesting.
+28. Basic information pages using supported layouts.
+29. WordPress importer with dry run and repeatable imports.
+30. Old Payload importer for articles, supported layouts, references, and relevant settings.
+31. Conflict resolution and legacy redirects.
+32. Release verification, import reconciliation, and representative page review.
 
 ## Validation by checkpoint
 

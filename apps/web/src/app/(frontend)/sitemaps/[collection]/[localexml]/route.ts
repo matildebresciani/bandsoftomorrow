@@ -3,13 +3,13 @@ import type { NextRequest } from 'next/server';
 import { getServerSideSitemap } from 'next-sitemap';
 import { replace } from 'string-ts';
 import z from 'zod';
-import { locales, routedCollections } from '@/i18n/localized-collections';
+import { frontendRoutedCollections, locales } from '@/i18n/localized-collections';
 import { getCachedArchiveSitemaps } from '@/lib/data/payload/get-cached-archive-sitemap';
 import { getCachedSitemap } from '@/lib/data/payload/get-cached-sitemap';
 
 const LocalesSchema = z
     .object({
-        collection: z.enum(['archives', ...routedCollections]),
+        collection: z.enum(['archives', ...frontendRoutedCollections]),
         localexml: z.templateLiteral([z.enum(locales), '.xml']),
     })
     .transform((data) => ({
@@ -34,7 +34,7 @@ export async function GET(
         return getServerSideSitemap(sitemap);
     }
 
-    if (routedCollections.includes(collection)) {
+    if (frontendRoutedCollections.includes(collection)) {
         const sitemap = await getCachedSitemap(collection, locale);
         return getServerSideSitemap(sitemap);
     }

@@ -8,7 +8,7 @@ import type {
     RelationshipField,
     TextField,
 } from 'payload';
-import { routedCollections } from '@/i18n/localized-collections';
+import { frontendRoutedCollections } from '@/i18n/localized-collections';
 import type { Page, Post } from '@/payload-types';
 
 type Relation<Slug extends CollectionSlug, T> = {
@@ -95,7 +95,7 @@ export const payloadLinkInner = (props: PayloadLinkInnerProps = {}): GroupField 
         type: 'relationship',
         name: 'relation',
         label: 'Link To',
-        relationTo: [...routedCollections],
+        relationTo: [...frontendRoutedCollections],
         required,
         localized,
         admin: {

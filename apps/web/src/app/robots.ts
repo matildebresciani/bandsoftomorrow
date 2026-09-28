@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next';
-import { locales, routedCollections } from '@/i18n/localized-collections';
+import { frontendRoutedCollections, locales } from '@/i18n/localized-collections';
 
 export default function robots(): MetadataRoute.Robots {
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
@@ -20,7 +20,7 @@ export default function robots(): MetadataRoute.Robots {
             },
         ],
         sitemap: [
-            ...[...routedCollections, 'archives'].flatMap((collection) =>
+            ...[...frontendRoutedCollections, 'archives'].flatMap((collection) =>
                 locales.map((locale) => `${baseUrl}/sitemaps/${collection}/${locale}.xml`),
             ),
         ],

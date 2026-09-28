@@ -16,6 +16,7 @@ import { Faqs } from './collections/entries/faqs/config';
 import { SavedLayouts } from './collections/entries/saved-layouts/config';
 import { TagGroups } from './collections/taxonomies/tag-groups/config';
 import { Tags } from './collections/taxonomies/tags/config';
+import { People } from './collections/team/people/config';
 import { ApiKeys } from './collections/tools-settings/api-keys/config';
 import { Navigation } from './collections/tools-settings/navigation/config';
 import { Options } from './collections/tools-settings/options/config';
@@ -72,6 +73,7 @@ export default buildConfig({
         PostCategories,
         TagGroups,
         Tags,
+        People,
         Media,
         Icons,
         SavedLayouts,

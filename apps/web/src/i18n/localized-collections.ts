@@ -9,6 +9,10 @@ export const localizedCollections = {
         en: 'post',
         da: 'artikel',
     },
+    people: {
+        en: 'people',
+        da: 'personer',
+    },
 } as const;
 
 export const isLocalizableCollection = <const T extends CollectionSlug>(
@@ -36,7 +40,13 @@ export const nonDefaultLocales = locales.filter((locale) => locale !== defaultLo
 /**
  * An array of collection slugs that can have their own slug / their own URL.
  */
-export const routedCollections = ['pages', 'posts'] as const satisfies readonly CollectionSlug[];
+export const routedCollections = ['pages', 'posts', 'people'] as const satisfies readonly CollectionSlug[];
+/** Collections whose frontend pages are implemented and can be linked, previewed, and indexed. */
+export const frontendRoutedCollections = ['pages', 'posts'] as const satisfies readonly RoutedCollectionSlug[];
+export type FrontendRoutedCollectionSlug = (typeof frontendRoutedCollections)[number];
+
+export const isFrontendRoutedCollection = (collection: string): collection is FrontendRoutedCollectionSlug =>
+    frontendRoutedCollections.some((slug) => slug === collection);
 /**
  * All paths that has to be localized but aren't created as collections in Payload
  * @example ['search']
@@ -48,8 +58,7 @@ export const paths = ['posts'] as const satisfies readonly string[];
  */
 export type RoutedCollectionSlug = (typeof routedCollections)[number];
 export const isRoutedCollection = (collection: string): collection is RoutedCollectionSlug =>
-    // biome-ignore lint: Typecasting is used as a validation tool in this scenario
-    routedCollections.includes(collection as RoutedCollectionSlug);
+    routedCollections.some((slug) => slug === collection);
 
 export const paginationTranslations = {
     page: {
