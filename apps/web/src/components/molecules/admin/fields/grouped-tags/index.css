@@ -1,0 +1,39 @@
+.grouped-tags__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.grouped-tags__actions .btn {
+    margin: 0.5rem 0 0;
+}
+
+.grouped-tags__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem;
+}
+
+.grouped-tags__edit {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    padding: 0 0.25rem;
+}
+
+.grouped-tags__edit:focus-visible {
+    outline: 2px solid currentColor;
+}
+
+.grouped-tags__status {
+    display: block;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+.grouped-tags__control > .react-select-container,
+.grouped-tags__control > .react-select {
+    flex: 1;
+    min-width: 0;
+}

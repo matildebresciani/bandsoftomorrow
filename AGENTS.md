@@ -29,12 +29,14 @@ All editorial articles are represented by one Payload `posts` collection. Do not
 - `posts` is the single collection for interviews, reviews, `ugens-udgivelser`, news, and future editorial post types.
 - Replace `post-categories` with `tag-groups` and `tags`. Each tag belongs to exactly one group, and posts can reference multiple reusable tags. Posts select tags rather than separately selecting groups.
 - The initial tag groups are Article type, Review type, Genre, Topic, and Artist. Use stable slugs and localized display names.
+- The Posts tag picker groups new choices under localized tag-group labels, falling back to internal names. Only groups assigned to Posts offer new choices; `showInFiltration` remains independent. Search and paginate tags through the existing Payload endpoints. Preserve ordered relationship IDs and existing selections even when their groups are no longer eligible or loading fails. This is editor behavior, not a new API validation or migration rule; keep categories and existing assignments intact.
 - Replace fixed article classification and artist fields with tag relationships. Map existing article types, review subtypes, genres, and artist values explicitly rather than losing their meaning.
 - Use one routed `people` collection for both authors and volunteers, independently of CMS login accounts. Do not create separate `authors` or `volunteers` collections.
 - People has one required non-localized `name`, optional localized plain-text `role` and rich-text `description`, an optional `profilePicture`, and an optional email readable only by authenticated CMS users. Do not add a separate title, display name, role group, biography, or duplicate featured-image/excerpt fields.
 - Generate editable People slugs from `name`, with draft/public publishing, publication dates, and version history. Reserve `/people/[slug]` in English and `/personer/[slug]` in Danish for future profiles and contribution archives.
-- Distinguish route-capable collections from collections with implemented frontend pages. Keep People out of page-link selectors, previews, and sitemaps until its frontend page exists. Post relationships to People are a separate checkpoint.
-- Add `concerts` and `galleries` as separate upcoming collection checkpoints. Keep existing collections and assignments intact while adding the new collections; taxonomy replacement and migration follow separately.
+- Distinguish route-capable collections from collections with implemented frontend pages. Keep People out of page-link selectors, previews, and sitemaps until its frontend page exists.
+- Posts have optional, manually ordered `authors` relationships to People through the standard Payload picker. CMS users may choose draft or public People; populated relationships must respect publication access and email privacy. Do not use the legacy hook that populates authors from Users. Frontend bylines, profiles, and source-author mappings remain separate work.
+- Galleries is deferred until explicitly requested again. Keep existing collections and assignments intact; taxonomy replacement and migration follow separately.
 - Concerts is a non-routed collection using `createCollection`, with featured image, artist, support act, venue, city, date, and ticket link. All seven fields are optional. Keep it out of routed-collection registration; no individual concert pages are planned for this checkpoint.
 - Keep post routes generic (`posts`/localized equivalent and a post slug). Do not encode category or article type into the canonical post route.
 - Use one generic post archive with search, pagination, and grouped tag filters represented in the URL. Defer dedicated tag pages.
@@ -55,7 +57,7 @@ All editorial articles are represented by one Payload `posts` collection. Do not
 ## First-release scope and deferred features
 
 - The first release covers editorial posts, the homepage, the searchable/filterable archive, and basic information pages.
-- People, Concerts, and Galleries collections are in scope. Their frontend pages, blocks, and migration wiring are separate checkpoints; adding a collection does not authorize implementing all related features.
+- People and Concerts collections are in scope; Galleries is deferred. Frontend pages, blocks, and migration wiring are separate checkpoints; adding a collection does not authorize implementing all related features.
 - Defer team/recruitment presentation, forms, reusable quote libraries and quote sliders, and dedicated people/tag landing pages until their own checkpoints.
 - Inline article images/grids and inline quotes remain in scope; they do not require standalone galleries or a quote library.
 - Retain existing FAQ records, but defer the FAQ presentation block. Defer standalone Heading and Text Card blocks; use supported rich text and Text Image content for initial information pages.
@@ -80,7 +82,7 @@ When adding or changing fields, preserve straightforward migration paths:
 
 ## Implementation checkpoints
 
-Each item is a separate deliverable and approval stop. The current priority is adding People, then Concerts, then Galleries before replacing existing collections or integrating frontend features; the source inventory remains required before migration work.
+Each item is a separate deliverable and approval stop unless explicitly combined by the user. After People and Concerts, the current checkpoint combines post authors and the grouped tag picker. Galleries is deferred; the source inventory remains required before migration work.
 
 1. Project instructions (`AGENTS.md` only).
 2. Migration inventory from available exports, including missing-access and unsupported-content reports.
@@ -88,9 +90,9 @@ Each item is a separate deliverable and approval stop. The current priority is a
 4. Tags collection and group relationship.
 5. Routed People collection, including template options and keeping future routes out of public links/previews/sitemaps.
 6. Concerts collection.
-7. Galleries collection.
-8. Posts taxonomy integration, preserving existing assignments.
-9. Post authors integration through People and old author mapping rules.
+7. Galleries collection (deferred).
+8. Grouped Posts tag picker and ordered post authors through People (one combined review checkpoint, keeping categories and existing assignments).
+9. Remaining taxonomy integration and source-author mapping rules, after the migration inventory.
 10. Draft/public publishing, preview, and public access.
 11. Generic localized post routing and link generation.
 12. Shared post card and visual variants.

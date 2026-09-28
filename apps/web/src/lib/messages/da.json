@@ -1,4 +1,15 @@
 {
     "frontpage": "Gå til forsiden",
-    "posts": "Indlæg"
+    "posts": "Indlæg",
+    "tagPicker": {
+        "create": "Opret tag",
+        "edit": "Rediger tag",
+        "more": "Indlæs flere tags",
+        "retry": "Prøv at indlæse tags igen",
+        "loading": "Indlæser tags…",
+        "empty": "Ingen matchende tags",
+        "noGroups": "Ingen taggrupper er tilknyttet indlæg",
+        "error": "Tags kunne ikke indlæses. Dine valg er bevaret. Prøv igen.",
+        "unavailable": "Utilgængeligt tag"
+    }
 }

@@ -40,6 +40,17 @@ export const Posts = createRoutedCollection(slug, {
                 {
                     fields: [
                         {
+                            name: 'authors',
+                            label: 'Author',
+                            type: 'relationship',
+                            relationTo: 'people',
+                            hasMany: true,
+                            admin: {
+                                position: 'sidebar',
+                                isSortable: true,
+                            },
+                        },
+                        {
                             name: 'relatedPosts',
                             type: 'relationship',
                             admin: {
@@ -60,6 +71,9 @@ export const Posts = createRoutedCollection(slug, {
                             type: 'relationship',
                             admin: {
                                 position: 'sidebar',
+                                components: {
+                                    Field: '@/components/molecules/admin/fields/grouped-tags/GroupedTagsField#GroupedTagsField',
+                                },
                             },
                             hasMany: true,
                             relationTo: 'tags',
