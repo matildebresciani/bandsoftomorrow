@@ -1,0 +1,20 @@
+@font-face {
+    font-family: "Dela Gothic One";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("/fonts/dela-gothic-one-latin.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Inclusive Sans";
+    font-style: normal;
+    font-weight: 300 700;
+    font-display: swap;
+    src: url("/fonts/inclusive-sans-latin.woff2") format("woff2");
+}
+
+:root {
+    --font-dela-gothic-one: "Dela Gothic One";
+    --font-inclusive-sans: "Inclusive Sans";
+}

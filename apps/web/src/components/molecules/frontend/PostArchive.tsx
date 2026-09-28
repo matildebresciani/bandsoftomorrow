@@ -78,7 +78,7 @@ const PostArchive = async ({ entries, locale, order, tag, showFilter }: Props) =
                         className={cn('col-span-12 grid gap-7 md:grid-cols-2 lg:grid-cols-3')}
                     >
                         {entries.map((entry) => (
-                            <PostCard key={entry.id} data={entry} locale={locale ?? defaultLocale} />
+                            <PostCard key={entry.id} post={entry} locale={locale ?? defaultLocale} variant="medium" />
                         ))}
                     </motion.div>
                 </AnimatePresence>
